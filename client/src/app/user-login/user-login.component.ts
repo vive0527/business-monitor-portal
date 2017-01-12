@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import {User} from '../user/user';
+import { User} from '../user/user';
+import { Http,Headers, RequestOptions} from '@angular/http'
+import 'rxjs/add/operator/toPromise';
 
 @Component({
   selector: 'app-user-login',
@@ -41,7 +43,7 @@ import {User} from '../user/user';
 })
 export class UserLoginComponent implements OnInit {
 
-  constructor() { }
+  constructor(private http: Http) { }
 
   model = new User("sunsz","123");
 
@@ -51,6 +53,8 @@ export class UserLoginComponent implements OnInit {
     this.submitted = true;
     console.log('Username is ' + this.model.username);
     console.log('server handling ...');
+
+    this.login();
 
     if(this.model.username=='sunsz'&&this.model.password=="123"){
       this.loginSuccessed = true;
@@ -62,7 +66,23 @@ export class UserLoginComponent implements OnInit {
     }
 
   }
+
+  login():Promise<User>{
+    let body = JSON.stringify(this.model);
+    let headers = new Headers({ 'Content-Type': 'application/json' });
+    let options = new RequestOptions({ headers: headers });
+
+    console.log(body)
+    return this.http.post("/api/login/",body,options)
+      .toPromise().then(response => console.log(response)).catch(this.handleError);
+
+  }
+  private handleError(error: any): Promise<any> {
+    console.error('An error occurred', error); // for demo purposes only
+    return Promise.reject(error.message || error);
+  }
   ngOnInit() {
   }
+
 
 }
