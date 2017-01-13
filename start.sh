@@ -1,4 +1,3 @@
-cd client;ng build;ngxxx;
-cd ../server;supervisor ./bin/www
+cd SERVer;supervisor ./bin/www
 
 
