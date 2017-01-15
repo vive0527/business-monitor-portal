@@ -48,7 +48,7 @@ export function mockFactory(backend: MockBackend, options: BaseRequestOptions) {
             status: 200,
             body: {
               returnCode: "00000001",
-              returnMsg: "failure"
+              returnMsg: "failure!!!"
             }
           })));
         }
