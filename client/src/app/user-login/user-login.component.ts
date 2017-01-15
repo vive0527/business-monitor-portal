@@ -1,8 +1,7 @@
 import {Component, OnInit} from '@angular/core';
-import {User} from '../user/user';
-import {UserService} from '../user/user.service';
+import {User} from '../_models/user';
+import {UserService} from '../_services/user.service';
 import {Router} from "@angular/router";
-
 @Component({
   selector: 'app-user-login',
   template: `<div class="row myCenter">
@@ -57,6 +56,7 @@ export class UserLoginComponent implements OnInit {
     this.submitted = true;
     this.userService.login(this.model).then(
       baseResult => {
+        console.log(baseResult);
         if (baseResult.returnCode == '00000000') {
           this.router.navigate(['/home']);
         } else {

@@ -9,7 +9,14 @@ import {AlertModule, ButtonsModule} from "ng2-bootstrap";
 import {UserLoginComponent} from "./user-login/user-login.component";
 import {LocationStrategy, HashLocationStrategy} from '@angular/common';
 import { HomeComponent } from './home/home.component';
-import { UserService} from './user/user.service'
+import { UserService} from './_services/user.service'
+
+// used to create fake backend
+import { fakeBackendProvider } from './_helpers/index';
+import { MockBackend, MockConnection } from '@angular/http/testing';
+import { BaseRequestOptions } from '@angular/http';
+
+
 const routes : Routes = [
   {path:'',redirectTo:'/index',pathMatch:'full'},
   {path:'index',component:UserLoginComponent},
@@ -33,7 +40,11 @@ const routes : Routes = [
     RouterModule.forRoot(routes)
   ],
   providers: [{ provide: LocationStrategy, useClass: HashLocationStrategy },
-    UserService
+    UserService,
+    // providers used to create fake backend
+    fakeBackendProvider,
+    MockBackend,
+    BaseRequestOptions
   ],
   bootstrap: [AppComponent]
 })
