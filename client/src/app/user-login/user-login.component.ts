@@ -1,11 +1,11 @@
-import { Component, OnInit } from '@angular/core';
-import { User} from '../user/user';
-import { Http,Headers, RequestOptions} from '@angular/http'
-import 'rxjs/add/operator/toPromise';
+import {Component, OnInit} from '@angular/core';
+import {User} from '../user/user';
+import {UserService} from '../user/user.service';
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-user-login',
-  template:`<div class="row myCenter">
+  template: `<div class="row myCenter">
   <div class="col-xs-6 col-md-4 col-center-block">
     <form #loginForm="ngForm" (ngSubmit)="onSubmit()" >
       <h3 class="form-signin-heading">请登录</h3>
@@ -43,44 +43,30 @@ import 'rxjs/add/operator/toPromise';
 })
 export class UserLoginComponent implements OnInit {
 
-  constructor(private http: Http) { }
 
-  model = new User("sunsz","123");
+  constructor(private userService: UserService,
+              private router: Router) {
+  }
+
+  model = new User("sunsz", "123");
 
   submitted = false;
   loginSuccessed = true;
+
   onSubmit() {
     this.submitted = true;
-    console.log('Username is ' + this.model.username);
-    console.log('server handling ...');
-
-    this.login();
-
-    if(this.model.username=='sunsz'&&this.model.password=="123"){
-      this.loginSuccessed = true;
-      console.log('login success');
-    }else{
-      this.submitted = false;
-      this.loginSuccessed = false;
-      console.log('login failure');
-    }
-
+    this.userService.login(this.model).then(
+      baseResult => {
+        if (baseResult.returnCode == '00000000') {
+          this.router.navigate(['/home']);
+        } else {
+          this.loginSuccessed = false;
+          this.submitted = false;
+        }
+      }
+    );
   }
 
-  login():Promise<User>{
-    let body = JSON.stringify(this.model);
-    let headers = new Headers({ 'Content-Type': 'application/json' });
-    let options = new RequestOptions({ headers: headers });
-
-    console.log(body)
-    return this.http.post("/api/login/",body,options)
-      .toPromise().then(response => console.log(response)).catch(this.handleError);
-
-  }
-  private handleError(error: any): Promise<any> {
-    console.error('An error occurred', error); // for demo purposes only
-    return Promise.reject(error.message || error);
-  }
   ngOnInit() {
   }
 

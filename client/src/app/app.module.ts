@@ -8,17 +8,20 @@ import {UserComponent} from "./user/user.component";
 import {AlertModule, ButtonsModule} from "ng2-bootstrap";
 import {UserLoginComponent} from "./user-login/user-login.component";
 import {LocationStrategy, HashLocationStrategy} from '@angular/common';
-
+import { HomeComponent } from './home/home.component';
+import { UserService} from './user/user.service'
 const routes : Routes = [
   {path:'',redirectTo:'/index',pathMatch:'full'},
-  {path:'index',component:UserLoginComponent}
+  {path:'index',component:UserLoginComponent},
+  {path:'home',component:HomeComponent}
 ];
 
 @NgModule({
   declarations: [
     AppComponent,
     UserComponent,
-    UserLoginComponent
+    UserLoginComponent,
+    HomeComponent
   ],
   imports: [
     BrowserModule,
@@ -29,7 +32,8 @@ const routes : Routes = [
     ButtonsModule.forRoot(),
     RouterModule.forRoot(routes)
   ],
-  providers: [{ provide: LocationStrategy, useClass: HashLocationStrategy }
+  providers: [{ provide: LocationStrategy, useClass: HashLocationStrategy },
+    UserService
   ],
   bootstrap: [AppComponent]
 })

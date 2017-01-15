@@ -7,8 +7,18 @@ router.get('/', function (req, res, next) {
 });
 
 router.post('/login', function (req, res, next) {
-    console.log(req.body.username);
-    res.send('respond with a resource');
+    var result = {returnCode:"",returnMsg:""}
+    if (req.body.username == 'sunsz' && req.body.password == "123") {
+        console.log('login success');
+        result.returnCode = "00000000";
+        result.returnMsg = "success";
+    } else {
+        console.log('login failure');
+        result.returnCode = "00000001";
+        result.returnMsg = "failure";
+
+    }
+    res.json(result);
 });
 
 module.exports = router;
