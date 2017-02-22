@@ -9,6 +9,7 @@ import {AlertModule, ButtonsModule} from "ng2-bootstrap";
 import {UserLoginComponent} from "./user-login/user-login.component";
 import {LocationStrategy, HashLocationStrategy} from '@angular/common';
 import {HomeComponent} from './home/home.component';
+import { Ng2Echarts } from 'ng2-echarts';
 import {UserService} from './_services/user.service'
 
 // used to create fake backend
@@ -19,6 +20,12 @@ import {TopComponent} from './top/top.component';
 import {LeftMenuComponent} from './left-menu/left-menu.component';
 import {MainComponent} from './main/main.component';
 import { BizIndexComponent } from './biz-index/biz-index.component';
+import { MainDownloadsComponent } from './main-downloads/main-downloads.component';
+import { DownloadsIndexComponent } from './downloads-index/downloads-index.component';
+import { DownloadsByTimeComponent } from './downloads-by-time/downloads-by-time.component';
+import { DownloadsByNameComponent } from './downloads-by-name/downloads-by-name.component';
+import { DownloadsByPublisherComponent } from './downloads-by-publisher/downloads-by-publisher.component';
+import { DownloadsByUserComponent } from './downloads-by-user/downloads-by-user.component';
 
 
 const routes: Routes = [
@@ -30,7 +37,8 @@ const routes: Routes = [
       path: '',
       children: [
         {path: 'main', component: MainComponent},
-        {path: 'biz-index',component:BizIndexComponent}
+        {path: 'biz-index',component:BizIndexComponent},
+        {path: 'downloads-index',component:DownloadsIndexComponent}
       ]
     }
 
@@ -43,13 +51,20 @@ const routes: Routes = [
 @NgModule({
   declarations: [
     AppComponent,
+    Ng2Echarts,
     UserComponent,
     UserLoginComponent,
     HomeComponent,
     TopComponent,
     LeftMenuComponent,
     MainComponent,
-    BizIndexComponent
+    BizIndexComponent,
+    MainDownloadsComponent,
+    DownloadsIndexComponent,
+    DownloadsByTimeComponent,
+    DownloadsByNameComponent,
+    DownloadsByPublisherComponent,
+    DownloadsByUserComponent
   ],
   imports: [
     BrowserModule,
